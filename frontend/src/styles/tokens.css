@@ -1,0 +1,44 @@
+:root {
+  /* ── Color palette (cool-toned dark) ─────────────────────────────────── */
+  --bg: #080b12;
+  --surface: #0f1622;
+  --surface-2: #161f2e;
+  --border: #1e2a3c;
+  --text: #e8eef6;
+  --text-muted: #8595ad;
+  --accent: #2dd4bf;
+  --accent-2: #38bdf8;
+  --glow: rgba(45, 212, 191, 0.18);
+
+  /* Derived tints */
+  --accent-soft: rgba(45, 212, 191, 0.12);
+  --accent-line: rgba(45, 212, 191, 0.35);
+  --danger: #f87171;
+  --success: #34d399;
+  --whatsapp: #1faf54;
+  --whatsapp-dark: #0e7a38;
+
+  /* Gradient — cyan → blue ONLY */
+  --grad: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  --grad-text: linear-gradient(120deg, #e8eef6 0%, #9fe9df 55%, #7cc6f5 100%);
+
+  /* ── Typography ──────────────────────────────────────────────────────── */
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-body: 'Satoshi', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* ── Shape & spacing ─────────────────────────────────────────────────── */
+  --radius: 6px;
+  --radius-lg: 10px;
+  --container: 1200px;
+  --nav-h: 68px;
+
+  /* Depth — glows, not heavy shadows */
+  --shadow-sm: 0 1px 0 rgba(255, 255, 255, 0.02);
+  --shadow-glow: 0 0 0 1px var(--border), 0 18px 50px -20px rgba(0, 0, 0, 0.7);
+  --shadow-accent: 0 8px 30px -8px var(--glow);
+
+  /* Motion */
+  --t-fast: 160ms ease-out;
+  --t-med: 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}

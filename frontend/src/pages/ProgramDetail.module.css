@@ -1,0 +1,248 @@
+/* ── Hero ───────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  padding-top: clamp(36px, 5vw, 56px);
+  padding-bottom: 30px;
+  overflow: hidden;
+}
+.heroGlow {
+  position: absolute;
+  top: -200px;
+  right: -100px;
+  width: 700px;
+  height: 600px;
+  background: radial-gradient(circle, var(--glow), transparent 65%);
+  pointer-events: none;
+}
+.back {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  letter-spacing: 0.04em;
+}
+.back:hover { color: var(--accent); }
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.heroTop { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+.icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius);
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+}
+.title { margin-bottom: 18px; }
+.tagline {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 54ch;
+  margin-bottom: 30px;
+}
+.heroCtas { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* Spec card */
+.specCard {
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, var(--surface-2), var(--surface));
+  position: sticky;
+  top: 100px;
+}
+.specHead {
+  font-size: 1rem;
+  padding-bottom: 16px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+.specs { display: flex; flex-direction: column; }
+.specs > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+}
+.specs > div:last-child { border-bottom: 0; }
+.specs dt {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.66rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.specs dd {
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* ── Ticker ─────────────────────────────────────────────────────────────── */
+.tickerWrap { margin-top: 40px; }
+.tickerLabel { display: block; margin-bottom: 14px; }
+.ticker {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.tickerTrack {
+  display: inline-flex;
+  gap: 14px;
+  white-space: nowrap;
+  animation: scroll-x 38s linear infinite;
+}
+.tickerItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: var(--surface);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+}
+.tickerNum {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+}
+@keyframes scroll-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tickerTrack { animation: none; }
+}
+
+/* ── Syllabus timeline ──────────────────────────────────────────────────── */
+.timeline { display: flex; flex-direction: column; }
+.week {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 24px;
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+.week:last-child { border-bottom: 1px solid var(--border); }
+.weekMarker { display: flex; justify-content: flex-start; }
+.weekNum {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+}
+.weekBody h3 { font-size: 1.2rem; margin-bottom: 8px; }
+.weekBody p { color: var(--text-muted); max-width: 70ch; }
+
+/* ── Two-column panels ──────────────────────────────────────────────────── */
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+.panel {
+  padding: 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+.panelTitle { margin: 12px 0 22px; font-size: 1.5rem; }
+.outcomes { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.outcomes li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--text);
+  font-size: 0.98rem;
+}
+.check {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  color: var(--accent);
+}
+.eligibility { display: flex; flex-direction: column; gap: 14px; }
+.eligibility p { color: var(--text-muted); font-size: 0.96rem; }
+.eligibility strong { color: var(--text); }
+.instructor {
+  margin-top: 8px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.instName { color: var(--text); font-size: 1.02rem; }
+
+/* ── FAQ ────────────────────────────────────────────────────────────────── */
+.faqLayout {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 48px;
+  align-items: start;
+}
+.faqHead { position: sticky; top: 100px; }
+.faqHead h2 { margin: 12px 0 14px; }
+
+/* ── Enroll band ────────────────────────────────────────────────────────── */
+.enrollBand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  margin: 20px 0 30px;
+  padding: clamp(30px, 4vw, 48px);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, var(--surface-2), var(--surface));
+}
+.enrollBand h2 { margin-bottom: 10px; }
+.enrollBand p { color: var(--text-muted); max-width: 54ch; }
+.enrollBand :global(.btn) { flex-shrink: 0; }
+
+@media (max-width: 940px) {
+  .heroGrid { grid-template-columns: 1fr; }
+  .specCard { position: static; }
+  .twoCol { grid-template-columns: 1fr; }
+  .faqLayout { grid-template-columns: 1fr; gap: 24px; }
+  .faqHead { position: static; }
+}
+@media (max-width: 560px) {
+  .week { grid-template-columns: 1fr; gap: 14px; }
+  .enrollBand { flex-direction: column; align-items: flex-start; }
+}
