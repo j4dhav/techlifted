@@ -42,6 +42,17 @@ db.exec(`
     ON applications (whatsapp_invited);
   CREATE INDEX IF NOT EXISTS idx_applications_timestamp
     ON applications (timestamp);
+
+  CREATE TABLE IF NOT EXISTS contact_messages (
+    id        INTEGER PRIMARY KEY AUTOINCREMENT,
+    timestamp TEXT NOT NULL,
+    name      TEXT NOT NULL,
+    email     TEXT NOT NULL,
+    message   TEXT NOT NULL
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_contact_timestamp
+    ON contact_messages (timestamp);
 `);
 
 logger.info(`SQLite ready at ${dbPath}`);
@@ -118,4 +129,37 @@ export function countApplications(): number {
     c: number;
   };
   return row.c;
+}
+
+/* ── Contact messages ─────────────────────────────────────────────────────── */
+
+export interface ContactRow {
+  id: number;
+  timestamp: string;
+  name: string;
+  email: string;
+  message: string;
+}
+
+const insertContactStmt = db.prepare(`
+  INSERT INTO contact_messages (timestamp, name, email, message)
+  VALUES (@timestamp, @name, @email, @message)
+`);
+
+export function insertContactMessage(input: {
+  name: string;
+  email: string;
+  message: string;
+}): ContactRow {
+  const timestamp = new Date().toISOString();
+  const info = insertContactStmt.run({ ...input, timestamp });
+  return db
+    .prepare('SELECT * FROM contact_messages WHERE id = ?')
+    .get(Number(info.lastInsertRowid)) as ContactRow;
+}
+
+export function getAllContactMessages(): ContactRow[] {
+  return db
+    .prepare('SELECT * FROM contact_messages ORDER BY datetime(timestamp) DESC')
+    .all() as ContactRow[];
 }

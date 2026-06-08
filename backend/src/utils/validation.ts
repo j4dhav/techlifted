@@ -44,6 +44,33 @@ function clean(v: unknown, max = 500): string {
     .slice(0, max);
 }
 
+export interface ContactInput {
+  name: string;
+  email: string;
+  message: string;
+}
+
+/** Validate and sanitize a contact-form submission. */
+export function validateContact(body: {
+  name?: unknown;
+  email?: unknown;
+  message?: unknown;
+}): ContactInput {
+  const errors: Record<string, string> = {};
+
+  const name = clean(body.name, 120);
+  if (name.length < 2) errors.name = 'Please enter your name.';
+
+  const email = clean(body.email, 200).toLowerCase();
+  if (!EMAIL_RE.test(email)) errors.email = 'A valid email is required.';
+
+  const message = clean(body.message, 2000);
+  if (message.length < 5) errors.message = 'Please write a short message.';
+
+  if (Object.keys(errors).length > 0) throw new ValidationError(errors);
+  return { name, email, message };
+}
+
 interface RawBody {
   fullName?: unknown;
   email?: unknown;

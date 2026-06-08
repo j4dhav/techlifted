@@ -4,9 +4,11 @@ import { Reveal } from '../components/Reveal';
 import { WhatsAppIcon, CheckIcon } from '../components/Icons';
 import {
   fetchApplications,
+  fetchContactMessages,
   sendInvites,
   ApiException,
   type AdminApplication,
+  type ContactMessage,
   type InviteResult,
 } from '../lib/api';
 import { PROGRAM_OPTIONS } from '../data/programs';
@@ -27,6 +29,7 @@ export function Admin() {
   const [token, setToken] = useState(() => sessionStorage.getItem(TOKEN_KEY) || '');
   const [authed, setAuthed] = useState(false);
   const [apps, setApps] = useState<AdminApplication[]>([]);
+  const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [authError, setAuthError] = useState('');
@@ -46,6 +49,13 @@ export function Admin() {
       setTotal(data.total);
       setAuthed(true);
       sessionStorage.setItem(TOKEN_KEY, tok);
+      // Load contact messages too (non-fatal if it fails).
+      try {
+        const c = await fetchContactMessages(tok);
+        setMessages(c.messages);
+      } catch {
+        setMessages([]);
+      }
     } catch (err) {
       setAuthed(false);
       sessionStorage.removeItem(TOKEN_KEY);
@@ -106,6 +116,7 @@ export function Admin() {
     setToken('');
     setAuthed(false);
     setApps([]);
+    setMessages([]);
   }
 
   /* ── Login gate ───────────────────────────────────────────────────────── */
@@ -278,6 +289,32 @@ export function Admin() {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {/* Contact messages */}
+        <div className={styles.messagesHead}>
+          <span className="eyebrow">/ Contact Messages</span>
+          <h2 className={styles.dashTitle}>Messages ({messages.length})</h2>
+        </div>
+        {messages.length === 0 ? (
+          <div className={styles.empty}><p>No messages yet.</p></div>
+        ) : (
+          <div className={styles.messageList}>
+            {messages.map((m) => (
+              <div key={m.id} className={styles.messageCard}>
+                <div className={styles.messageTop}>
+                  <strong>{m.name}</strong>
+                  <a href={`mailto:${m.email}`}>{m.email}</a>
+                  <span className={`mono ${styles.messageDate}`}>
+                    {new Date(m.timestamp).toLocaleString('en-IN', {
+                      day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit',
+                    })}
+                  </span>
+                </div>
+                <p className={styles.messageBody}>{m.message}</p>
+              </div>
+            ))}
           </div>
         )}
       </div>

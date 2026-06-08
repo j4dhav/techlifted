@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Reveal } from '../components/Reveal';
 import { WhatsAppIcon, ArrowRight, CheckIcon } from '../components/Icons';
 import { CONTACT } from '../data/constants';
+import { submitContact, ApiException } from '../lib/api';
 import styles from './Contact.module.css';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -14,9 +15,12 @@ export function Contact() {
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [serverError, setServerError] = useState('');
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
+    setServerError('');
     const next: typeof errors = {};
     if (name.trim().length < 2) next.name = 'Please enter your name.';
     if (!EMAIL_RE.test(email.trim())) next.email = 'Enter a valid email.';
@@ -24,12 +28,27 @@ export function Contact() {
     setErrors(next);
     if (Object.keys(next).length) return;
 
-    // No public contact endpoint is required; compose a pre-filled email so the
-    // message reaches the team reliably from any device.
-    const subject = encodeURIComponent(`EduBridge enquiry from ${name.trim()}`);
-    const body = encodeURIComponent(`${message.trim()}\n\n— ${name.trim()} (${email.trim()})`);
-    window.location.href = `mailto:${CONTACT.email}?subject=${subject}&body=${body}`;
-    setSent(true);
+    setSubmitting(true);
+    try {
+      await submitContact({
+        name: name.trim(),
+        email: email.trim(),
+        message: message.trim(),
+      });
+      setSent(true);
+    } catch (err) {
+      if (err instanceof ApiException && err.fields) {
+        setErrors(err.fields);
+      } else {
+        // Network/server error — fall back to a pre-filled email so the
+        // message still reaches the team.
+        setServerError(
+          'We couldn’t send that just now. You can email us directly instead.',
+        );
+      }
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -52,9 +71,9 @@ export function Contact() {
                 <span className={styles.thanksIcon}><CheckIcon size={28} /></span>
                 <h2>Thanks, {name.split(' ')[0]}!</h2>
                 <p>
-                  Your email client should have opened with your message ready to
-                  send. If it didn’t, reach us directly at{' '}
-                  <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+                  Your message has been received — we’ll get back to you within a
+                  day at <strong>{email}</strong>. For anything urgent, reach us
+                  on <a href={COMMUNITY} target="_blank" rel="noreferrer">WhatsApp</a>.
                 </p>
                 <button className="btn btn-ghost" onClick={() => { setSent(false); setName(''); setEmail(''); setMessage(''); }}>
                   Send another
@@ -95,8 +114,23 @@ export function Contact() {
                   />
                   {errors.message && <p className={styles.error}>{errors.message}</p>}
                 </div>
-                <button type="submit" className="btn btn-primary btn-block">
-                  Send Message <ArrowRight size={16} />
+                {serverError && (
+                  <p className={styles.serverError}>
+                    {serverError}{' '}
+                    <a
+                      href={`mailto:${CONTACT.email}?subject=${encodeURIComponent(
+                        `EduBridge enquiry from ${name.trim()}`,
+                      )}&body=${encodeURIComponent(
+                        `${message.trim()}\n\n— ${name.trim()} (${email.trim()})`,
+                      )}`}
+                    >
+                      Email {CONTACT.email}
+                    </a>
+                  </p>
+                )}
+                <button type="submit" className="btn btn-primary btn-block" disabled={submitting}>
+                  {submitting ? 'Sending…' : 'Send Message'}
+                  {!submitting && <ArrowRight size={16} />}
                 </button>
               </form>
             )}

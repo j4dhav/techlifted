@@ -115,3 +115,40 @@ export async function fetchHealth(): Promise<Record<string, unknown>> {
   const res = await fetch(url('/api/health'));
   return parse(res);
 }
+
+export interface ContactMessage {
+  id: number;
+  timestamp: string;
+  name: string;
+  email: string;
+  message: string;
+}
+
+export async function fetchContactMessages(
+  token: string,
+): Promise<{ count: number; messages: ContactMessage[] }> {
+  const res = await fetch(url('/api/contact'), {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return parse(res);
+}
+
+export interface ContactResponse {
+  success: boolean;
+  id: number;
+  warnings: string[];
+}
+
+/** Submit a contact-form message. */
+export async function submitContact(payload: {
+  name: string;
+  email: string;
+  message: string;
+}): Promise<ContactResponse> {
+  const res = await fetch(url('/api/contact'), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  return parse<ContactResponse>(res);
+}

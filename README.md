@@ -230,6 +230,8 @@ Base URL: `http://localhost:4000` in dev.
 | `GET` | `/api/health` | — | Liveness + which integrations are configured. |
 | `POST` | `/api/applications` | — | Submit an application (`multipart/form-data`). PDF uploads `marksheet`, `idProof` (≤5MB each). |
 | `GET` | `/api/applications` | admin | List all applications. |
+| `POST` | `/api/contact` | — | Submit a contact message (`{ name, email, message }`). Saved to SQLite + a "Contact Messages" sheet tab. |
+| `GET` | `/api/contact` | admin | List all contact messages. |
 | `POST` | `/api/whatsapp/invite` | admin | Send WhatsApp invites to un-invited applicants. Body: `{ from?, to? }` ISO dates. |
 
 **Admin auth:** send the token as `Authorization: Bearer <ADMIN_TOKEN>` or `x-admin-token: <token>`.

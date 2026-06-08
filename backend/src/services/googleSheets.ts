@@ -110,6 +110,83 @@ export interface SheetsAppendOutcome {
   error?: string;
 }
 
+const CONTACT_SHEET = 'Contact Messages';
+const CONTACT_HEADER = ['Timestamp', 'Name', 'Email', 'Message'];
+let contactHeaderEnsured = false;
+
+/** Ensure the "Contact Messages" tab exists with a header row. */
+async function ensureContactSheet(client: sheets_v4.Sheets): Promise<void> {
+  if (contactHeaderEnsured) return;
+  const spreadsheetId = env.google.spreadsheetId;
+
+  const meta = await client.spreadsheets.get({ spreadsheetId });
+  const exists = (meta.data.sheets || []).some(
+    (s) => s.properties?.title === CONTACT_SHEET,
+  );
+  if (!exists) {
+    await client.spreadsheets.batchUpdate({
+      spreadsheetId,
+      requestBody: { requests: [{ addSheet: { properties: { title: CONTACT_SHEET } } }] },
+    });
+  }
+  const head = await client.spreadsheets.values.get({
+    spreadsheetId,
+    range: `${CONTACT_SHEET}!A1:D1`,
+  });
+  if (!head.data.values || head.data.values.length === 0) {
+    await client.spreadsheets.values.update({
+      spreadsheetId,
+      range: `${CONTACT_SHEET}!A1`,
+      valueInputOption: 'RAW',
+      requestBody: { values: [CONTACT_HEADER] },
+    });
+  }
+  contactHeaderEnsured = true;
+}
+
+/**
+ * Append a contact message to the "Contact Messages" tab. Retries up to 3
+ * times; never throws — returns an outcome so the DB save stays authoritative.
+ */
+export async function appendContactToSheet(msg: {
+  timestamp: string;
+  name: string;
+  email: string;
+  message: string;
+}): Promise<SheetsAppendOutcome> {
+  if (!integrations.sheetsConfigured) {
+    return { ok: false, skipped: true };
+  }
+
+  const maxAttempts = 3;
+  let lastErr: unknown;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      const client = getClient();
+      await ensureContactSheet(client);
+      await client.spreadsheets.values.append({
+        spreadsheetId: env.google.spreadsheetId,
+        range: `${CONTACT_SHEET}!A1`,
+        valueInputOption: 'USER_ENTERED',
+        insertDataOption: 'INSERT_ROWS',
+        requestBody: {
+          values: [[msg.timestamp, msg.name, msg.email, msg.message]],
+        },
+      });
+      logger.info('Appended contact message to Google Sheet.');
+      return { ok: true };
+    } catch (err) {
+      lastErr = err;
+      const m = err instanceof Error ? err.message : String(err);
+      logger.warn(`Contact sheet append attempt ${attempt}/${maxAttempts} failed: ${m}`);
+      if (attempt < maxAttempts) await sleep(attempt * 500);
+    }
+  }
+  const error = lastErr instanceof Error ? lastErr.message : String(lastErr);
+  logger.error('Contact sheet append permanently failed.', error);
+  return { ok: false, error };
+}
+
 /**
  * Append one application row to the configured Google Sheet.
  * Retries transient failures up to 3 times with backoff. Never throws —

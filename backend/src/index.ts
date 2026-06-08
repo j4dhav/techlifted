@@ -7,6 +7,7 @@ import { env } from './config/env';
 import { logger } from './utils/logger';
 import { applicationsRouter } from './routes/applications';
 import { whatsappRouter } from './routes/whatsapp';
+import { contactRouter } from './routes/contact';
 import { healthRouter } from './routes/health';
 import { errorHandler, notFound } from './middleware/errorHandler';
 import { uploadDir } from './middleware/upload';
@@ -56,6 +57,7 @@ app.use('/uploads', express.static(uploadDir));
 app.use('/api/health', healthRouter);
 app.use('/api/applications', applicationsRouter);
 app.use('/api/whatsapp', whatsappRouter);
+app.use('/api/contact', contactRouter);
 
 app.get('/', (_req, res) => {
   res.json({ name: 'EduBridge API', status: 'running' });
