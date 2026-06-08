@@ -74,7 +74,7 @@ export function Home() {
           </motion.h1>
 
           <motion.p className={styles.heroSub} variants={heroItem}>
-            EduBridge is a mentor-led platform bringing hands-on engineering,
+            TechLiftED is a mentor-led platform bringing hands-on engineering,
             coding, and AI-tools programs to students across India — all in the
             browser, all on free tools.
           </motion.p>
@@ -136,12 +136,12 @@ export function Home() {
         </div>
       </section>
 
-      {/* ── Why EduBridge ─────────────────────────────────────────────── */}
+      {/* ── Why TechLiftED ─────────────────────────────────────────────── */}
       <section className="section">
         <div className="container">
           <div className={styles.whyLayout}>
             <Reveal className={styles.whyHead}>
-              <span className="eyebrow">/ Why EduBridge</span>
+              <span className="eyebrow">/ Why TechLiftED</span>
               <h2>Engineered for how Indian students actually learn.</h2>
               <p className="text-muted">
                 Most of our students join on an Android phone over mobile data.

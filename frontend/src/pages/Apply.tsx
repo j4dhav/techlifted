@@ -195,7 +195,7 @@ export function Apply() {
       <div className={`container ${styles.wrap}`}>
         <div className={styles.head}>
           <span className="eyebrow">/ Application</span>
-          <h1 className={styles.title}>Apply to EduBridge</h1>
+          <h1 className={styles.title}>Apply to TechLiftED</h1>
           <p className={styles.sub}>
             Takes about three minutes. Your details are only used to enrol you
             and share class updates.

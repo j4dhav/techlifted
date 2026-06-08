@@ -11,7 +11,7 @@ export function Footer() {
       <div className={`container ${styles.grid}`}>
         <div className={styles.brandCol}>
           <Link to="/" className={styles.logo}>
-            Edu<span className={styles.accent}>Bridge</span>
+            TechLift<span className={styles.accent}>ED</span>
           </Link>
           <p className={styles.tag}>
             Practical engineering, coding & AI-tools programs for students across
@@ -60,7 +60,7 @@ export function Footer() {
       </div>
 
       <div className={`container ${styles.bottom}`}>
-        <span className="mono">© {year} EDUBRIDGE</span>
+        <span className="mono">© {year} TECHLIFTED</span>
         <span className="mono">MADE IN INDIA · FOR INDIA</span>
       </div>
     </footer>

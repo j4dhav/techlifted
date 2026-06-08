@@ -42,7 +42,7 @@ export const AI_TOOLS_START_WEEKS = [
 ];
 
 export const CONTACT = {
-  email: 'hello@edubridge.in',
+  email: 'hello@techlifted.in',
   whatsappNumber: '+91 90000 00000',
   // Public WhatsApp community invite link (placeholder until configured).
   whatsappCommunity: 'https://chat.whatsapp.com/your-invite-code',

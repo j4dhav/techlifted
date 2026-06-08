@@ -16,7 +16,7 @@ function getClient(): TwilioClient {
 
 function buildMessage(): string {
   return (
-    'Welcome to EduBridge! Tap to join our student community for class ' +
+    'Welcome to TechLiftED! Tap to join our student community for class ' +
     `updates and support: ${env.twilio.communityLink}`
   );
 }

@@ -59,7 +59,7 @@ export function Contact() {
           <span className="eyebrow">/ Contact</span>
           <h1 className={styles.title}>Let’s talk</h1>
           <p className={styles.sub}>
-            Questions about a program, eligibility, or bringing EduBridge to your
+            Questions about a program, eligibility, or bringing TechLiftED to your
             school? We usually reply within a day.
           </p>
         </Reveal>
@@ -119,7 +119,7 @@ export function Contact() {
                     {serverError}{' '}
                     <a
                       href={`mailto:${CONTACT.email}?subject=${encodeURIComponent(
-                        `EduBridge enquiry from ${name.trim()}`,
+                        `TechLiftED enquiry from ${name.trim()}`,
                       )}&body=${encodeURIComponent(
                         `${message.trim()}\n\n— ${name.trim()} (${email.trim()})`,
                       )}`}

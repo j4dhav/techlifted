@@ -14,7 +14,7 @@ import {
 import { PROGRAM_OPTIONS } from '../data/programs';
 import styles from './Admin.module.css';
 
-const TOKEN_KEY = 'edubridge_admin_token';
+const TOKEN_KEY = 'techlifted_admin_token';
 
 function programLabel(slug: string): string {
   return PROGRAM_OPTIONS.find((p) => p.value === slug)?.label || slug;

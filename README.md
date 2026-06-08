@@ -1,6 +1,6 @@
-# EduBridge
+# TechLiftED
 
-A production-ready, full-stack web platform for **EduBridge** — an online engineering & tech
+A production-ready, full-stack web platform for **TechLiftED** — an online engineering & tech
 education brand for students in India. It ships three programs (Electrical & Mechanical
 Engineering, Coding with Python, and a rolling AI-Tools track), a polished multi-step application
 flow, a Google Sheets data sink, and a Twilio WhatsApp community-invite system with an admin
@@ -30,7 +30,7 @@ dashboard.
 ## Project structure
 
 ```
-edubridge/
+techlifted/
 ├── backend/                 # Express + TypeScript API
 │   ├── src/
 │   │   ├── config/env.ts     # env loading + integration flags
@@ -104,15 +104,15 @@ npm --prefix frontend run preview # previews the built frontend
 | --- | --- | --- |
 | `PORT` | no (4000) | API port. |
 | `NODE_ENV` | no | `development` / `production`. |
-| `CORS_ORIGIN` | yes (prod) | Comma-separated allowed frontend origins, e.g. `https://edubridge.vercel.app`. |
+| `CORS_ORIGIN` | yes (prod) | Comma-separated allowed frontend origins, e.g. `https://techlifted.vercel.app`. |
 | `ADMIN_TOKEN` | yes (for /admin) | Secret token gating `GET /api/applications` and WhatsApp invites. |
-| `DATABASE_FILE` | no | SQLite path (default `data/edubridge.sqlite`). |
+| `DATABASE_FILE` | no | SQLite path (default `data/techlifted.sqlite`). |
 | `UPLOAD_DIR` | no | Upload directory (default `uploads`). |
 | `MAX_UPLOAD_BYTES` | no | Max file size (default `5242880` = 5MB). |
 | `DEFAULT_COUNTRY_CODE` | no | Default phone country code (default `+91`). |
 | `GOOGLE_SERVICE_ACCOUNT_BASE64` | for Sheets | base64-encoded service-account JSON. |
 | `GOOGLE_SHEET_ID` | for Sheets | Spreadsheet ID from the sheet URL. |
-| `GOOGLE_SHEET_NAME` | no | Tab name (default `EduBridge Enrollment Data`). |
+| `GOOGLE_SHEET_NAME` | no | Tab name (default `TechLiftED Enrollment Data`). |
 | `TWILIO_ACCOUNT_SID` | for WhatsApp | Twilio Account SID. |
 | `TWILIO_AUTH_TOKEN` | for WhatsApp | Twilio Auth Token. |
 | `TWILIO_WHATSAPP_FROM` | for WhatsApp | Sender, e.g. `whatsapp:+14155238886`. |
@@ -149,7 +149,7 @@ process:
    A `*.json` file downloads. **Keep it secret.**
 5. **Create your spreadsheet** — make a new Google Sheet. Copy its **ID** from the URL:
    `https://docs.google.com/spreadsheets/d/`**`THIS_IS_THE_ID`**`/edit`.
-   The backend will create a tab named `EduBridge Enrollment Data` and add headers automatically.
+   The backend will create a tab named `TechLiftED Enrollment Data` and add headers automatically.
 6. **Share the sheet with the service account** — open the JSON key, copy the `client_email`
    (looks like `name@project.iam.gserviceaccount.com`), then **Share** the spreadsheet with that
    email as **Editor**.
@@ -176,7 +176,7 @@ never lose an applicant. Check `GET /api/health` to confirm `googleSheets: true`
 ## Twilio WhatsApp setup
 
 > **Important reality:** WhatsApp does **not** allow programmatically adding someone to a
-> Community/Group via any official API. EduBridge therefore sends each applicant an **invite
+> Community/Group via any official API. TechLiftED therefore sends each applicant an **invite
 > message** containing your community link — they tap to join themselves.
 
 1. **Create a Twilio account** — <https://www.twilio.com/try-twilio>.
@@ -197,7 +197,7 @@ never lose an applicant. Check `GET /api/health` to confirm `googleSheets: true`
 **Sending invites:** go to `/admin`, enter your `ADMIN_TOKEN`, and click **Send Invites** (optionally
 within a date range). The message sent is:
 
-> Welcome to EduBridge! Tap to join our student community for class updates and support: *{link}*
+> Welcome to TechLiftED! Tap to join our student community for class updates and support: *{link}*
 
 Each recipient is marked `whatsapp_invited = true` on success, so re-running never double-sends.
 Transient failures retry up to 3 times; invalid numbers are skipped and logged.
@@ -274,7 +274,7 @@ The frontend and backend deploy independently.
 4. **Environment:** add every variable from `backend/.env` (set `CORS_ORIGIN` to your frontend URL,
    plus `ADMIN_TOKEN`, Google, Twilio values). Render sets `PORT` automatically.
 5. **Persistent disk (recommended):** SQLite and uploads are file-based. Add a Render **Disk**
-   mounted at e.g. `/data`, and set `DATABASE_FILE=/data/edubridge.sqlite` and `UPLOAD_DIR=/data/uploads`
+   mounted at e.g. `/data`, and set `DATABASE_FILE=/data/techlifted.sqlite` and `UPLOAD_DIR=/data/uploads`
    so data survives redeploys.
 
 **Railway:**
@@ -291,7 +291,7 @@ The frontend and backend deploy independently.
 2. **Root Directory:** `frontend`. Framework preset: **Vite**.
    - Build Command: `npm run build` · Output Directory: `dist`.
 3. **Environment Variables:** set `VITE_API_BASE_URL` to your backend URL (e.g.
-   `https://edubridge-api.onrender.com`) and `VITE_WHATSAPP_COMMUNITY` to your community link.
+   `https://techlifted-api.onrender.com`) and `VITE_WHATSAPP_COMMUNITY` to your community link.
 4. Add a rewrite so client-side routing works (already covered by Vercel's SPA handling for Vite;
    if needed, add `frontend/vercel.json` with a catch-all rewrite to `/index.html`).
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * EduBridge one-shot setup helper.
+ * TechLiftED one-shot setup helper.
  * - Installs dependencies for backend + frontend (+ root).
  * - Creates .env files from .env.example where missing.
  * Run from the repo root: `npm run setup` (or `node scripts/setup.mjs`).
@@ -26,7 +26,7 @@ function ensureEnv(dir) {
   }
 }
 
-console.log('EduBridge setup — installing dependencies and preparing env files.');
+console.log('TechLiftED setup — installing dependencies and preparing env files.');
 
 run('npm install', root);
 run('npm install', join(root, 'backend'));

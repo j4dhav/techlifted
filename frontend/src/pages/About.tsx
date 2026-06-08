@@ -11,7 +11,7 @@ const TEAM = [
 ];
 
 const TIMELINE = [
-  { when: '2026 · Q1', title: 'The idea', body: 'EduBridge starts with a simple question: why should hands-on tech learning need expensive hardware or software?' },
+  { when: '2026 · Q1', title: 'The idea', body: 'TechLiftED starts with a simple question: why should hands-on tech learning need expensive hardware or software?' },
   { when: '2026 · Q2', title: 'Curriculum built', body: 'Three browser-first programs designed around free tools and weekly, project-driven outcomes.' },
   { when: '2026 · Jul', title: 'First cohorts', body: 'Engineering, Coding, and the rolling AI-Tools track open to students across India.' },
   { when: 'Beyond', title: 'Scaling access', body: 'More tracks, regional language support, and partnerships with schools and colleges.' },
@@ -32,12 +32,12 @@ export function About() {
           <Reveal>
             <span className="eyebrow">/ About</span>
             <h1 className={styles.title}>
-              Bridging the gap between
+              Lifting students from
               <br />
-              <span className="gradient-text">curiosity and capability.</span>
+              <span className="gradient-text">curiosity to capability.</span>
             </h1>
             <p className={styles.lead}>
-              EduBridge exists to make practical, project-based tech education
+              TechLiftED exists to make practical, project-based tech education
               reachable for every student in India — regardless of their device,
               budget, or background. We teach with free, browser-based tools and
               live mentors, so the only thing you need to begin is curiosity.
@@ -64,7 +64,7 @@ export function About() {
         <div className="container">
           <Reveal className="section-head">
             <span className="eyebrow">/ Team</span>
-            <h2>The people behind EduBridge</h2>
+            <h2>The people behind TechLiftED</h2>
             <p>A small team of working engineers and educators who love teaching beginners.</p>
           </Reveal>
           <RevealGroup className={styles.team}>
@@ -112,7 +112,7 @@ export function About() {
               ))}
             </div>
             <p className={styles.partnerNote}>
-              Partner logos are placeholders. Interested in bringing EduBridge to
+              Partner logos are placeholders. Interested in bringing TechLiftED to
               your institution? <Link to="/contact">Get in touch.</Link>
             </p>
           </Reveal>

@@ -28,7 +28,7 @@ export function Navbar() {
   return (
     <header className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
       <div className={`container ${styles.inner}`}>
-        <Link to="/" className={styles.logo} aria-label="EduBridge home">
+        <Link to="/" className={styles.logo} aria-label="TechLiftED home">
           <span className={styles.logoMark} aria-hidden>
             <svg width="26" height="26" viewBox="0 0 32 32">
               <defs>
@@ -38,20 +38,19 @@ export function Navbar() {
                 </linearGradient>
               </defs>
               <path
-                d="M6 21c4-7 16-7 20 0"
+                d="M8 15 L16 7 L24 15"
                 fill="none"
                 stroke="url(#navg)"
-                strokeWidth="2.6"
+                strokeWidth="2.8"
                 strokeLinecap="round"
+                strokeLinejoin="round"
               />
-              <circle cx="6" cy="21" r="2.4" fill="url(#navg)" />
-              <circle cx="26" cy="21" r="2.4" fill="url(#navg)" />
-              <path d="M16 7v6" stroke="url(#navg)" strokeWidth="2.6" strokeLinecap="round" />
-              <circle cx="16" cy="13.5" r="2.2" fill="#080B12" stroke="url(#navg)" strokeWidth="2" />
+              <path d="M16 8 V21" stroke="url(#navg)" strokeWidth="2.8" strokeLinecap="round" />
+              <path d="M10 25 H22" stroke="url(#navg)" strokeWidth="2.8" strokeLinecap="round" opacity="0.55" />
             </svg>
           </span>
           <span className={styles.logoText}>
-            Edu<span className={styles.logoAccent}>Bridge</span>
+            TechLift<span className={styles.logoAccent}>ED</span>
           </span>
         </Link>
 

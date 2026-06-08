@@ -60,14 +60,14 @@ app.use('/api/whatsapp', whatsappRouter);
 app.use('/api/contact', contactRouter);
 
 app.get('/', (_req, res) => {
-  res.json({ name: 'EduBridge API', status: 'running' });
+  res.json({ name: 'TechLiftED API', status: 'running' });
 });
 
 app.use(notFound);
 app.use(errorHandler);
 
 const server = app.listen(env.port, () => {
-  logger.info(`EduBridge API listening on http://localhost:${env.port}`);
+  logger.info(`TechLiftED API listening on http://localhost:${env.port}`);
   logger.info(`CORS origins: ${env.corsOrigins.join(', ') || '(none)'}`);
   logger.info(`Uploads dir: ${path.relative(process.cwd(), uploadDir)}`);
 });

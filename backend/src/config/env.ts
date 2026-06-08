@@ -30,7 +30,7 @@ export const env = {
   adminToken: optional('ADMIN_TOKEN'),
 
   // SQLite file location (relative paths resolved from backend root).
-  databaseFile: optional('DATABASE_FILE', 'data/edubridge.sqlite'),
+  databaseFile: optional('DATABASE_FILE', 'data/techlifted.sqlite'),
 
   // Upload storage directory.
   uploadDir: optional('UPLOAD_DIR', 'uploads'),
@@ -41,7 +41,7 @@ export const env = {
     // base64-encoded service-account JSON
     serviceAccountB64: optional('GOOGLE_SERVICE_ACCOUNT_BASE64'),
     spreadsheetId: optional('GOOGLE_SHEET_ID'),
-    sheetName: optional('GOOGLE_SHEET_NAME', 'EduBridge Enrollment Data'),
+    sheetName: optional('GOOGLE_SHEET_NAME', 'TechLiftED Enrollment Data'),
   },
 
   // Twilio WhatsApp
