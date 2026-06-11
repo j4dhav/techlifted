@@ -15,8 +15,7 @@ import styles from './Apply.module.css';
 
 const COMMUNITY =
   import.meta.env.VITE_WHATSAPP_COMMUNITY || CONTACT.whatsappCommunity;
-const MAX_FILE = 5 * 1024 * 1024;
-const STEPS = ['Personal', 'Program', 'Documents', 'Review'];
+const STEPS = ['Personal', 'Program', 'Review'];
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 interface FormState {
@@ -33,7 +32,7 @@ interface FormState {
   agree: boolean;
 }
 
-type Errors = Partial<Record<keyof FormState | 'marksheet' | 'idProof', string>>;
+type Errors = Partial<Record<keyof FormState, string>>;
 
 const initialState = (program: ProgramSlug | ''): FormState => ({
   fullName: '',
@@ -58,8 +57,6 @@ export function Apply() {
 
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<FormState>(() => initialState(validPre));
-  const [marksheet, setMarksheet] = useState<File | null>(null);
-  const [idProof, setIdProof] = useState<File | null>(null);
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState('');
@@ -85,16 +82,6 @@ export function Apply() {
     setErrors((e) => ({ ...e, devices: undefined }));
   };
 
-  function validateFile(file: File | null, field: 'marksheet' | 'idProof'): string | null {
-    if (!file) return null; // optional
-    const isPdf =
-      file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
-    if (!isPdf) return 'Only PDF files are accepted.';
-    if (file.size > MAX_FILE) return 'File is larger than 5MB.';
-    setErrors((e) => ({ ...e, [field]: undefined }));
-    return null;
-  }
-
   function validateStep(s: number): boolean {
     const e: Errors = {};
     if (s === 0) {
@@ -109,14 +96,6 @@ export function Apply() {
       if (form.devices.length === 0) e.devices = 'Select at least one device.';
       if (form.devices.includes('Other') && !form.otherDevice.trim())
         e.otherDevice = 'Please describe your other device.';
-    }
-    if (s === 2) {
-      const mErr = marksheet
-        ? validateFile(marksheet, 'marksheet')
-        : null;
-      const iErr = idProof ? validateFile(idProof, 'idProof') : null;
-      if (mErr) e.marksheet = mErr;
-      if (iErr) e.idProof = iErr;
     }
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -152,8 +131,6 @@ export function Apply() {
     if (form.devices.includes('Other'))
       fd.append('otherDevice', form.otherDevice.trim());
     fd.append('agree', String(form.agree));
-    if (marksheet) fd.append('marksheet', marksheet);
-    if (idProof) fd.append('idProof', idProof);
 
     try {
       const res = await submitApplication(fd);
@@ -379,41 +356,8 @@ export function Apply() {
                 </div>
               )}
 
-              {/* ── Step 3: Documents ───────────────────────────────── */}
+              {/* ── Step 3: Review ──────────────────────────────────── */}
               {step === 2 && (
-                <div className={styles.stepBody}>
-                  <h2 className={styles.stepTitle}>Documents</h2>
-                  <p className={styles.optionalNote}>
-                    Both documents are optional — you can skip this step and
-                    submit later. PDF only, max 5MB each.
-                  </p>
-                  <FileField
-                    label="Marksheet / Transcript"
-                    file={marksheet}
-                    error={errors.marksheet}
-                    onSelect={(f) => {
-                      const err = validateFile(f, 'marksheet');
-                      if (err) { setErrors((e) => ({ ...e, marksheet: err })); return; }
-                      setMarksheet(f);
-                    }}
-                    onClear={() => { setMarksheet(null); setErrors((e) => ({ ...e, marksheet: undefined })); }}
-                  />
-                  <FileField
-                    label="ID Proof"
-                    file={idProof}
-                    error={errors.idProof}
-                    onSelect={(f) => {
-                      const err = validateFile(f, 'idProof');
-                      if (err) { setErrors((e) => ({ ...e, idProof: err })); return; }
-                      setIdProof(f);
-                    }}
-                    onClear={() => { setIdProof(null); setErrors((e) => ({ ...e, idProof: undefined })); }}
-                  />
-                </div>
-              )}
-
-              {/* ── Step 4: Review ──────────────────────────────────── */}
-              {step === 3 && (
                 <div className={styles.stepBody}>
                   <h2 className={styles.stepTitle}>Review & submit</h2>
                   <dl className={styles.review}>
@@ -433,8 +377,6 @@ export function Apply() {
                             .join(', ')
                         : '—'
                     } />
-                    <Row label="Marksheet" value={marksheet?.name || 'Not uploaded'} />
-                    <Row label="ID Proof" value={idProof?.name || 'Not uploaded'} />
                   </dl>
 
                   <label className={`${styles.agree} ${errors.agree ? styles.agreeErr : ''}`}>
@@ -510,47 +452,6 @@ function Field({
         {hint && <span className={styles.hint}>{hint}</span>}
       </label>
       {children}
-      {error && <p className={styles.error}>{error}</p>}
-    </div>
-  );
-}
-
-function FileField({
-  label, file, error, onSelect, onClear,
-}: {
-  label: string;
-  file: File | null;
-  error?: string;
-  onSelect: (f: File) => void;
-  onClear: () => void;
-}) {
-  return (
-    <div className={styles.field}>
-      <label className={styles.label}>{label}<span className={styles.hint}>PDF · max 5MB</span></label>
-      {file ? (
-        <div className={styles.fileChosen}>
-          <span className={styles.fileIcon}>PDF</span>
-          <span className={styles.fileName}>{file.name}</span>
-          <span className={styles.fileSize}>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
-          <button type="button" className={styles.fileClear} onClick={onClear}>Remove</button>
-        </div>
-      ) : (
-        <label className={styles.dropzone}>
-          <input
-            type="file"
-            accept="application/pdf,.pdf"
-            hidden
-            onChange={(e) => {
-              const f = e.target.files?.[0];
-              if (f) onSelect(f);
-              e.target.value = '';
-            }}
-          />
-          <span className={styles.dropIcon}>↑</span>
-          <span>Tap to upload <strong>{label}</strong></span>
-          <span className={styles.dropHint}>PDF only · up to 5MB</span>
-        </label>
-      )}
       {error && <p className={styles.error}>{error}</p>}
     </div>
   );

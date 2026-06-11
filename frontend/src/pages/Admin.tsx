@@ -235,7 +235,6 @@ export function Admin() {
                   <th>State</th>
                   <th>Program</th>
                   <th>Devices</th>
-                  <th>Files</th>
                   <th>Invited</th>
                 </tr>
               </thead>
@@ -268,15 +267,6 @@ export function Admin() {
                         {a.devices.join(', ')}
                         {a.otherDevice ? ` (${a.otherDevice})` : ''}
                       </span>
-                    </td>
-                    <td className={styles.nowrap}>
-                      {a.marksheetFile && (
-                        <a href={`/uploads/${a.marksheetFile}`} target="_blank" rel="noreferrer" className={styles.fileLink}>MS</a>
-                      )}
-                      {a.idFile && (
-                        <a href={`/uploads/${a.idFile}`} target="_blank" rel="noreferrer" className={styles.fileLink}>ID</a>
-                      )}
-                      {!a.marksheetFile && !a.idFile && <span className={styles.muted}>—</span>}
                     </td>
                     <td>
                       {a.whatsappInvited ? (
