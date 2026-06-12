@@ -9,7 +9,7 @@ export function Programs() {
       <section className={styles.head}>
         <div className="container">
           <Reveal>
-            <span className="eyebrow">/ Programs</span>
+            <span className="eyebrow">Programs</span>
             <h1 className={styles.title}>
               Focused programs.
               <br />

@@ -118,7 +118,7 @@ export function Home() {
       <section className="section" id="programs">
         <div className="container">
           <Reveal className="section-head center">
-            <span className="eyebrow">/ Programs</span>
+            <span className="eyebrow">Programs</span>
             <h2>Three ways to start building</h2>
             <p>
               Short, focused, and project-driven. Pick a fixed 4-week cohort or
@@ -141,7 +141,7 @@ export function Home() {
         <div className="container">
           <div className={styles.whyLayout}>
             <Reveal className={styles.whyHead}>
-              <span className="eyebrow">/ Why TechLiftED</span>
+              <span className="eyebrow">Why TechLiftED</span>
               <h2>Engineered for how Indian students actually learn.</h2>
               <p className="text-muted">
                 Most of our students join on an Android phone over mobile data.
@@ -171,7 +171,7 @@ export function Home() {
       <section className="section">
         <div className="container">
           <Reveal className="section-head center">
-            <span className="eyebrow">/ Student Stories</span>
+            <span className="eyebrow">Student Stories</span>
             <h2>Built by students like you</h2>
           </Reveal>
 
@@ -203,7 +203,7 @@ export function Home() {
         <Reveal className={styles.ctaBand}>
           <div className={styles.ctaGlow} aria-hidden />
           <div className={styles.ctaContent}>
-            <span className="eyebrow">/ Ready when you are</span>
+            <span className="eyebrow">Ready when you are</span>
             <h2>Your first project is one application away.</h2>
             <p>
               Apply in under three minutes. No fees to start, no prerequisites,

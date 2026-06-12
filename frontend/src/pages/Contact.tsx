@@ -56,7 +56,7 @@ export function Contact() {
       <div className={styles.glow} aria-hidden />
       <div className="container">
         <Reveal className={styles.head}>
-          <span className="eyebrow">/ Contact</span>
+          <span className="eyebrow">Contact</span>
           <h1 className={styles.title}>Let’s talk</h1>
           <p className={styles.sub}>
             Questions about a program, eligibility, or bringing TechLiftED to your
@@ -138,7 +138,7 @@ export function Contact() {
 
           <Reveal index={1} className={styles.sideCol}>
             <div className={styles.infoCard}>
-              <span className="eyebrow">/ Email</span>
+              <span className="eyebrow">Email</span>
               <a href={`mailto:${CONTACT.email}`} className={styles.infoValue}>
                 {CONTACT.email}
               </a>
@@ -155,7 +155,7 @@ export function Contact() {
             </a>
 
             <div className={styles.infoCard}>
-              <span className="eyebrow">/ Response time</span>
+              <span className="eyebrow">Response time</span>
               <span className={styles.infoValue}>~24 hours</span>
               <p className={styles.infoNote}>Mon–Sat, IST.</p>
             </div>

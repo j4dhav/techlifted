@@ -5,7 +5,7 @@ export function NotFound() {
   return (
     <section className={styles.page}>
       <div className="container">
-        <span className="eyebrow">/ 404</span>
+        <span className="eyebrow">404</span>
         <h1 className={styles.code}>404</h1>
         <h2 className={styles.title}>This page took a different path.</h2>
         <p className={styles.sub}>

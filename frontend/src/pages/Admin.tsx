@@ -125,7 +125,7 @@ export function Admin() {
       <section className={styles.gate}>
         <div className={styles.glow} aria-hidden />
         <Reveal className={styles.gateCard}>
-          <span className="eyebrow">/ Admin</span>
+          <span className="eyebrow">Admin</span>
           <h1 className={styles.gateTitle}>Admin access</h1>
           <p className={styles.gateSub}>
             Enter your admin token to view applications and send WhatsApp invites.
@@ -163,7 +163,7 @@ export function Admin() {
       <div className="container">
         <div className={styles.dashHead}>
           <div>
-            <span className="eyebrow">/ Admin Dashboard</span>
+            <span className="eyebrow">Admin Dashboard</span>
             <h1 className={styles.dashTitle}>Applications</h1>
           </div>
           <button className="btn btn-ghost" onClick={logout}>Sign out</button>
@@ -284,7 +284,7 @@ export function Admin() {
 
         {/* Contact messages */}
         <div className={styles.messagesHead}>
-          <span className="eyebrow">/ Contact Messages</span>
+          <span className="eyebrow">Contact Messages</span>
           <h2 className={styles.dashTitle}>Messages ({messages.length})</h2>
         </div>
         {messages.length === 0 ? (

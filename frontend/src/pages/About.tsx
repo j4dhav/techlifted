@@ -30,7 +30,7 @@ export function About() {
         <div className={styles.glow} aria-hidden />
         <div className="container">
           <Reveal>
-            <span className="eyebrow">/ About</span>
+            <span className="eyebrow">About</span>
             <h1 className={styles.title}>
               Lifting students from
               <br />
@@ -63,7 +63,7 @@ export function About() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <Reveal className="section-head">
-            <span className="eyebrow">/ Team</span>
+            <span className="eyebrow">Team</span>
             <h2>The people behind TechLiftED</h2>
             <p>A small team of working engineers and educators who love teaching beginners.</p>
           </Reveal>
@@ -83,7 +83,7 @@ export function About() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <Reveal className="section-head">
-            <span className="eyebrow">/ Journey</span>
+            <span className="eyebrow">Journey</span>
             <h2>Where we’re headed</h2>
           </Reveal>
           <RevealGroup className={styles.timeline}>
@@ -105,7 +105,7 @@ export function About() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <Reveal className={styles.partners}>
-            <span className="eyebrow">/ Partners</span>
+            <span className="eyebrow">Partners</span>
             <div className={styles.partnerGrid}>
               {['SCHOOL', 'COLLEGE', 'NGO', 'STARTUP', 'COMMUNITY'].map((p) => (
                 <div key={p} className={styles.partnerLogo}>{p}</div>

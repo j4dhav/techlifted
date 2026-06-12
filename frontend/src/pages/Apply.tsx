@@ -171,7 +171,7 @@ export function Apply() {
       <div className={styles.glow} aria-hidden />
       <div className={`container ${styles.wrap}`}>
         <div className={styles.head}>
-          <span className="eyebrow">/ Application</span>
+          <span className="eyebrow">Application</span>
           <h1 className={styles.title}>Apply to TechLiftED</h1>
           <p className={styles.sub}>
             Takes about three minutes. Your details are only used to enrol you
@@ -485,7 +485,7 @@ function SuccessState({ id, warnings }: { id: number; warnings: string[] }) {
           >
             <CheckIcon size={34} />
           </motion.div>
-          <span className="eyebrow">/ Application #{id}</span>
+          <span className="eyebrow">Application #{id}</span>
           <h1 className={styles.successTitle}>You’re enrolled! 🎉</h1>
           <p className={styles.successSub}>
             Check your email for course details, and tap below to join our

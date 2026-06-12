@@ -98,7 +98,7 @@ export function ProgramDetail() {
       <section className="section" id="syllabus">
         <div className="container">
           <Reveal className="section-head">
-            <span className="eyebrow">/ Syllabus</span>
+            <span className="eyebrow">Syllabus</span>
             <h2>{rolling ? 'Week-by-week topics' : 'Your 4-week journey'}</h2>
             <p>
               {rolling
@@ -128,7 +128,7 @@ export function ProgramDetail() {
         <div className="container">
           <div className={styles.twoCol}>
             <Reveal className={styles.panel}>
-              <span className="eyebrow">/ Learning Outcomes</span>
+              <span className="eyebrow">Learning Outcomes</span>
               <h2 className={styles.panelTitle}>What you’ll walk away with</h2>
               <ul className={styles.outcomes}>
                 {program.outcomes.map((o) => (
@@ -141,7 +141,7 @@ export function ProgramDetail() {
             </Reveal>
 
             <Reveal index={1} className={styles.panel}>
-              <span className="eyebrow">/ Eligibility</span>
+              <span className="eyebrow">Eligibility</span>
               <h2 className={styles.panelTitle}>Who it’s for</h2>
               <div className={styles.eligibility}>
                 <p>
@@ -154,7 +154,7 @@ export function ProgramDetail() {
                   about {program.cadence.toLowerCase()} of focused time.
                 </p>
                 <div className={styles.instructor}>
-                  <span className={`eyebrow`}>/ Your Mentor</span>
+                  <span className={`eyebrow`}>Your Mentor</span>
                   <strong className={styles.instName}>
                     {program.instructor.role}
                   </strong>
@@ -171,7 +171,7 @@ export function ProgramDetail() {
         <div className="container">
           <div className={styles.faqLayout}>
             <Reveal className={styles.faqHead}>
-              <span className="eyebrow">/ FAQ</span>
+              <span className="eyebrow">FAQ</span>
               <h2>Questions, answered</h2>
               <p className="text-muted">
                 Still unsure? Reach out on{' '}
