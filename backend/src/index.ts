@@ -11,7 +11,7 @@ import { contactRouter } from './routes/contact';
 import { healthRouter } from './routes/health';
 import { errorHandler, notFound } from './middleware/errorHandler';
 import { uploadDir } from './middleware/upload';
-import './db/database'; // initialize DB + schema on boot
+import { initDb } from './db/database';
 
 const app = express();
 
@@ -66,11 +66,20 @@ app.get('/', (_req, res) => {
 app.use(notFound);
 app.use(errorHandler);
 
-const server = app.listen(env.port, () => {
-  logger.info(`TechLiftED API listening on http://localhost:${env.port}`);
-  logger.info(`CORS origins: ${env.corsOrigins.join(', ') || '(none)'}`);
-  logger.info(`Uploads dir: ${path.relative(process.cwd(), uploadDir)}`);
-});
+// Ensure the database schema exists before we start accepting requests.
+let server: ReturnType<typeof app.listen>;
+initDb()
+  .then(() => {
+    server = app.listen(env.port, () => {
+      logger.info(`TechLiftED API listening on http://localhost:${env.port}`);
+      logger.info(`CORS origins: ${env.corsOrigins.join(', ') || '(none)'}`);
+      logger.info(`Uploads dir: ${path.relative(process.cwd(), uploadDir)}`);
+    });
+  })
+  .catch((err) => {
+    logger.error('Failed to initialize the database — is DATABASE_URL correct?', err);
+    process.exit(1);
+  });
 
 // Graceful shutdown + never crash on unhandled rejections.
 process.on('unhandledRejection', (reason) => {
@@ -81,7 +90,7 @@ process.on('uncaughtException', (err) => {
 });
 function shutdown(signal: string) {
   logger.info(`${signal} received — shutting down.`);
-  server.close(() => process.exit(0));
+  if (server) server.close(() => process.exit(0));
   setTimeout(() => process.exit(1), 5000).unref();
 }
 process.on('SIGTERM', () => shutdown('SIGTERM'));

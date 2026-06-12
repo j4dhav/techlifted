@@ -48,7 +48,7 @@ export async function sendCommunityInvites(
     );
   }
 
-  const recipients = getUninvitedApplications(from, to);
+  const recipients = await getUninvitedApplications(from, to);
   if (recipients.length === 0) {
     logger.info('No un-invited applicants in range.');
     return result;
@@ -97,7 +97,7 @@ export async function sendCommunityInvites(
     }
 
     if (sent) {
-      markInvited(app.id);
+      await markInvited(app.id);
       result.sent++;
       result.details.push({
         id: app.id,

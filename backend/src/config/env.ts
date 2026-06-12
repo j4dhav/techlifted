@@ -29,8 +29,8 @@ export const env = {
   // Admin token gating GET /api/applications and the WhatsApp invite endpoint.
   adminToken: optional('ADMIN_TOKEN'),
 
-  // SQLite file location (relative paths resolved from backend root).
-  databaseFile: optional('DATABASE_FILE', 'data/techlifted.sqlite'),
+  // Postgres connection string (Neon, Render, or any Postgres). Required.
+  databaseUrl: optional('DATABASE_URL'),
 
   // Upload storage directory.
   uploadDir: optional('UPLOAD_DIR', 'uploads'),

@@ -7,7 +7,7 @@ flow, a Google Sheets data sink, and a Twilio WhatsApp community-invite system w
 dashboard.
 
 - **Frontend:** React (Vite) + TypeScript, CSS Modules, Framer Motion. Dark, cool-toned, high-tech UI.
-- **Backend:** Node.js + Express (TypeScript), SQLite via `better-sqlite3`.
+- **Backend:** Node.js + Express (TypeScript), PostgreSQL (Neon) via `node-postgres`.
 - **Integrations:** Google Sheets API v4 (service account) + Twilio WhatsApp API.
 
 ---
@@ -106,7 +106,7 @@ npm --prefix frontend run preview # previews the built frontend
 | `NODE_ENV` | no | `development` / `production`. |
 | `CORS_ORIGIN` | yes (prod) | Comma-separated allowed frontend origins, e.g. `https://techlifted.vercel.app`. |
 | `ADMIN_TOKEN` | yes (for /admin) | Secret token gating `GET /api/applications` and WhatsApp invites. |
-| `DATABASE_FILE` | no | SQLite path (default `data/techlifted.sqlite`). |
+| `DATABASE_URL` | **yes** | Postgres connection string (free from Neon). Same value locally and in production. |
 | `UPLOAD_DIR` | no | Upload directory (default `uploads`). |
 | `MAX_UPLOAD_BYTES` | no | Max file size (default `5242880` = 5MB). |
 | `DEFAULT_COUNTRY_CODE` | no | Default phone country code (default `+91`). |
@@ -134,10 +134,25 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 ---
 
+## Database setup
+
+The backend stores applications and contact messages in **PostgreSQL**. The free, recommended host
+is **Neon** (serverless Postgres) — your data persists across deploys and restarts.
+
+1. Sign up at **https://neon.tech** (GitHub login works).
+2. Create a project (name it `techlifted`; pick a region near your users).
+3. On the project dashboard, copy the **Connection string** — it looks like
+   `postgresql://user:password@ep-xxxx.region.aws.neon.tech/neondb?sslmode=require`.
+4. Put it in `backend/.env` as `DATABASE_URL=...`, and set the same value in your host (Render).
+   Use the **same** connection string locally and in production so they share one database.
+
+The backend creates its tables automatically on first start. `GET /api/health` shows
+`database: true` when connected.
+
 ## Google Sheets setup
 
-The backend appends every successful application as a row to a Google Sheet. Setup is a one-time
-process:
+The backend appends every successful application as a row to a Google Sheet (in addition to storing
+it in Postgres). Setup is a one-time process:
 
 1. **Create a Google Cloud project** — <https://console.cloud.google.com/> → *Select a project* →
    *New Project*.
@@ -273,16 +288,16 @@ The frontend and backend deploy independently.
    - **Start Command:** `npm run start`
 4. **Environment:** add every variable from `backend/.env` (set `CORS_ORIGIN` to your frontend URL,
    plus `ADMIN_TOKEN`, Google, Twilio values). Render sets `PORT` automatically.
-5. **Persistent disk (recommended):** SQLite and uploads are file-based. Add a Render **Disk**
-   mounted at e.g. `/data`, and set `DATABASE_FILE=/data/techlifted.sqlite` and `UPLOAD_DIR=/data/uploads`
-   so data survives redeploys.
+5. **Database:** set `DATABASE_URL` to your Neon Postgres connection string (see
+   [Database setup](#database-setup)). Because the database is hosted on Neon, your data persists
+   across deploys and restarts — no Render disk needed.
 
 **Railway:**
 1. Railway → *New Project → Deploy from GitHub repo*.
 2. Set the service **Root Directory** to `backend`.
 3. Build: `npm install && npm run build`; Start: `npm run start`.
-4. Add the same environment variables. Attach a **Volume** for persistent SQLite/uploads and point
-   `DATABASE_FILE` / `UPLOAD_DIR` at it.
+4. Add the same environment variables, including `DATABASE_URL` (your Neon string). No volume is
+   needed since the database is hosted on Neon.
 
 ### Frontend → Vercel or Netlify
 
@@ -315,8 +330,8 @@ The frontend and backend deploy independently.
 - **WhatsApp not sending** — in the Twilio Sandbox, recipients must first join the sandbox. For
   production, an approved template is required. Check `twilioWhatsApp: true` on `/api/health`.
 - **CORS errors in production** — `CORS_ORIGIN` must exactly match the frontend origin.
-- **Data resets on redeploy** — attach a persistent disk/volume and point `DATABASE_FILE` /
-  `UPLOAD_DIR` at it (see Deployment).
+- **Database connection fails** — confirm `DATABASE_URL` is set and ends with `?sslmode=require`
+  (Neon requires SSL). `GET /api/health` reports `database: true` when connected.
 
 ---
 

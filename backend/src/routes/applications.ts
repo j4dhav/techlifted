@@ -55,7 +55,7 @@ applicationsRouter.post(
     // Throws ValidationError -> 400 via centralized handler.
     const input = validateApplication(req.body, { marksheetFile, idFile });
 
-    const row = insertApplication(input);
+    const row = await insertApplication(input);
     logger.info(`Saved application #${row.id} (${row.email}).`);
 
     // Append to Google Sheets — non-blocking for the applicant.
@@ -83,10 +83,10 @@ applicationsRouter.get(
   '/',
   requireAdmin,
   asyncHandler(async (_req: Request, res: Response) => {
-    const rows = getAllApplications();
+    const rows = await getAllApplications();
     res.json({
       count: rows.length,
-      total: countApplications(),
+      total: await countApplications(),
       applications: rows.map(serialize),
     });
   }),

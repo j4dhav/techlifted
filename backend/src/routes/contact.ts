@@ -13,7 +13,7 @@ contactRouter.post(
   '/',
   asyncHandler(async (req: Request, res: Response) => {
     const input = validateContact(req.body);
-    const row = insertContactMessage(input);
+    const row = await insertContactMessage(input);
     logger.info(`Saved contact message #${row.id} (${row.email}).`);
 
     const sheet = await appendContactToSheet(row);
@@ -31,7 +31,7 @@ contactRouter.get(
   '/',
   requireAdmin,
   asyncHandler(async (_req: Request, res: Response) => {
-    const messages = getAllContactMessages();
+    const messages = await getAllContactMessages();
     res.json({ count: messages.length, messages });
   }),
 );
