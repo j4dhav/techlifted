@@ -20,32 +20,8 @@ const heroItem: Variants = {
   },
 };
 
-const TESTIMONIALS = [
-  {
-    quote:
-      'I built a working night-light circuit in Tinkercad without owning a single component. The live mentor made debugging actually fun.',
-    name: 'Sneha R.',
-    detail: 'Class 11 · Pune',
-    program: 'Engineering',
-  },
-  {
-    quote:
-      'Went from never having coded to shipping my own quiz game in Python in four weeks. The weekly builds kept me hooked.',
-    name: 'Arjun M.',
-    detail: 'B.Sc. 1st year · Hyderabad',
-    program: 'Coding — Python',
-  },
-  {
-    quote:
-      'I joined AI Tools in week 6 for prompt engineering and stayed for everything. Being able to drop in any week is perfect for my schedule.',
-    name: 'Fatima K.',
-    detail: 'Working professional · Delhi',
-    program: 'AI Tools',
-  },
-];
-
 const WHY = [
-  { title: 'Runs on any device', body: 'Everything is browser-based and works on a low-end Android phone over a patchy connection.' },
+  { title: 'Runs on any device', body: 'Everything is browser-based and works on a low-end phone over a patchy connection.' },
   { title: 'Live mentors, not videos', body: 'Real instructors each week who debug with you and review what you build.' },
   { title: 'Build something real', body: 'Every program ends with an original project you designed and shipped yourself.' },
   { title: 'Free tools only', body: 'Tinkercad, Replit, Colab, and free AI tiers — no expensive software required.' },
@@ -75,7 +51,7 @@ export function Home() {
 
           <motion.p className={styles.heroSub} variants={heroItem}>
             TechLiftED is a mentor-led platform bringing hands-on engineering,
-            coding, and AI-tools programs to students across India — all in the
+            coding, and AI-tools programs to students everywhere — all in the
             browser, all on free tools.
           </motion.p>
 
@@ -142,9 +118,9 @@ export function Home() {
           <div className={styles.whyLayout}>
             <Reveal className={styles.whyHead}>
               <span className="eyebrow">Why TechLiftED</span>
-              <h2>Engineered for how Indian students actually learn.</h2>
+              <h2>Engineered for how students actually learn.</h2>
               <p className="text-muted">
-                Most of our students join on an Android phone over mobile data.
+                Many students join on a modest phone over a slow connection.
                 Every choice we make — tools, format, pacing — respects that.
               </p>
               <Link to="/about" className="btn btn-outline">
@@ -164,37 +140,6 @@ export function Home() {
               ))}
             </RevealGroup>
           </div>
-        </div>
-      </section>
-
-      {/* ── Testimonials ──────────────────────────────────────────────── */}
-      <section className="section">
-        <div className="container">
-          <Reveal className="section-head center">
-            <span className="eyebrow">Student Stories</span>
-            <h2>Built by students like you</h2>
-          </Reveal>
-
-          <RevealGroup className={styles.testGrid}>
-            {TESTIMONIALS.map((t) => (
-              <Reveal as="div" key={t.name} className={styles.testCard}>
-                <div className={styles.quoteMark} aria-hidden>“</div>
-                <p className={styles.quote}>{t.quote}</p>
-                <div className={styles.testFoot}>
-                  <div className={styles.avatar} aria-hidden>
-                    {t.name.charAt(0)}
-                  </div>
-                  <div>
-                    <span className={styles.testName}>{t.name}</span>
-                    <span className={styles.testDetail}>{t.detail}</span>
-                  </div>
-                  <span className={`badge badge-accent ${styles.testBadge}`}>
-                    {t.program}
-                  </span>
-                </div>
-              </Reveal>
-            ))}
-          </RevealGroup>
         </div>
       </section>
 

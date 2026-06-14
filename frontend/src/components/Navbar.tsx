@@ -37,16 +37,9 @@ export function Navbar() {
                   <stop offset="1" stopColor="#38BDF8" />
                 </linearGradient>
               </defs>
-              <path
-                d="M8 15 L16 7 L24 15"
-                fill="none"
-                stroke="url(#navg)"
-                strokeWidth="2.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path d="M16 8 V21" stroke="url(#navg)" strokeWidth="2.8" strokeLinecap="round" />
-              <path d="M10 25 H22" stroke="url(#navg)" strokeWidth="2.8" strokeLinecap="round" opacity="0.55" />
+              <path d="M7 9 L16 3 L25 9 L25 14 L16 8 L7 14 Z" fill="url(#navg)" />
+              <path d="M7 17 L16 11 L25 17 L25 22 L16 16 L7 22 Z" fill="url(#navg)" />
+              <path d="M7 25 L16 19 L25 25 L25 30 L16 24 L7 30 Z" fill="url(#navg)" />
             </svg>
           </span>
           <span className={styles.logoText}>

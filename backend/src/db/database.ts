@@ -35,7 +35,8 @@ export async function initDb(): Promise<void> {
       full_name            TEXT    NOT NULL,
       email                TEXT    NOT NULL,
       phone                TEXT    NOT NULL,
-      state                TEXT    NOT NULL,
+      country              TEXT    NOT NULL DEFAULT '',
+      state                TEXT    NOT NULL DEFAULT '',
       school               TEXT,
       program              TEXT    NOT NULL,
       preferred_start_week TEXT,
@@ -61,6 +62,12 @@ export async function initDb(): Promise<void> {
     CREATE INDEX IF NOT EXISTS idx_contact_timestamp
       ON contact_messages (timestamp);
   `);
+
+  // Ensure the country column exists on databases created before it was added.
+  await pool.query(
+    `ALTER TABLE applications ADD COLUMN IF NOT EXISTS country TEXT NOT NULL DEFAULT ''`,
+  );
+
   logger.info('Postgres ready (schema ensured).');
 }
 
@@ -72,15 +79,16 @@ export async function insertApplication(
   const timestamp = new Date().toISOString();
   const res = await pool.query<ApplicationRow>(
     `INSERT INTO applications (
-       timestamp, full_name, email, phone, state, school, program,
+       timestamp, full_name, email, phone, country, state, school, program,
        preferred_start_week, devices, other_device, marksheet_file, id_file
-     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
      RETURNING *`,
     [
       timestamp,
       input.fullName,
       input.email,
       input.phone,
+      input.country,
       input.state,
       input.school,
       input.program,

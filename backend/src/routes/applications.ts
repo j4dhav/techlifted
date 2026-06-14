@@ -28,6 +28,7 @@ function serialize(row: ApplicationRow) {
     fullName: row.full_name,
     email: row.email,
     phone: row.phone,
+    country: row.country,
     state: row.state,
     school: row.school,
     program: row.program,

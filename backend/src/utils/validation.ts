@@ -76,6 +76,7 @@ interface RawBody {
   email?: unknown;
   phone?: unknown;
   countryCode?: unknown;
+  country?: unknown;
   state?: unknown;
   school?: unknown;
   program?: unknown;
@@ -118,10 +119,11 @@ export function validateApplication(
   if (!rawPhone) errors.phone = 'Phone number is required.';
   else if (!phone) errors.phone = 'Enter a valid phone number.';
 
+  const country = clean(body.country, 80);
+  if (!country) errors.country = 'Country is required.';
+
+  // State/region is optional (only some countries provide a fixed list).
   const state = clean(body.state, 80);
-  if (!state) errors.state = 'State is required.';
-  else if (!(INDIAN_STATES as readonly string[]).includes(state))
-    errors.state = 'Select a valid state.';
 
   const schoolRaw = clean(body.school, 160);
   const school = schoolRaw.length ? schoolRaw : null;
@@ -172,6 +174,7 @@ export function validateApplication(
     fullName,
     email,
     phone: phone!,
+    country,
     state,
     school,
     program,

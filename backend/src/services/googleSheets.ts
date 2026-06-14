@@ -4,8 +4,8 @@ import { logger } from '../utils/logger';
 import type { ApplicationRow } from '../types';
 
 const HEADER_ROW = [
-  'Timestamp', 'Full Name', 'Email', 'Phone', 'State', 'School', 'Program',
-  'Preferred Start Week', 'Devices', 'Marksheet', 'ID', 'WhatsApp Invited',
+  'Timestamp', 'Full Name', 'Email', 'Phone', 'Country', 'State / Region',
+  'School', 'Program', 'Preferred Start Week', 'Devices', 'WhatsApp Invited',
 ];
 
 const PROGRAM_LABELS: Record<string, string> = {
@@ -66,7 +66,7 @@ async function ensureHeader(client: sheets_v4.Sheets): Promise<void> {
   // Check whether row 1 already holds headers.
   const head = await client.spreadsheets.values.get({
     spreadsheetId,
-    range: `${title}!A1:L1`,
+    range: `${title}!A1:K1`,
   });
   if (!head.data.values || head.data.values.length === 0) {
     await client.spreadsheets.values.update({
@@ -93,13 +93,12 @@ function rowFromApplication(app: ApplicationRow): string[] {
     app.full_name,
     app.email,
     app.phone,
-    app.state,
+    app.country || '',
+    app.state || '',
     app.school || '',
     PROGRAM_LABELS[app.program] || app.program,
     app.preferred_start_week || '',
     devices,
-    app.marksheet_file || '',
-    app.id_file || '',
     app.whatsapp_invited ? 'Yes' : 'No',
   ];
 }

@@ -232,7 +232,7 @@ export function Admin() {
                   <th>Submitted</th>
                   <th>Name</th>
                   <th>Contact</th>
-                  <th>State</th>
+                  <th>Location</th>
                   <th>Program</th>
                   <th>Devices</th>
                   <th>Invited</th>
@@ -255,7 +255,7 @@ export function Admin() {
                       <a href={`mailto:${a.email}`}>{a.email}</a>
                       <span className={`mono ${styles.sub2}`}>{a.phone}</span>
                     </td>
-                    <td>{a.state}</td>
+                    <td>{[a.state, a.country].filter(Boolean).join(', ') || '—'}</td>
                     <td>
                       {programLabel(a.program)}
                       {a.preferredStartWeek && (

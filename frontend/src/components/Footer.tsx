@@ -14,8 +14,8 @@ export function Footer() {
             TechLift<span className={styles.accent}>ED</span>
           </Link>
           <p className={styles.tag}>
-            Practical engineering, coding & AI-tools programs for students across
-            India. Browser-based. Mentor-led. Built for any device.
+            Practical engineering, coding & AI-tools programs for students
+            worldwide. Browser-based. Mentor-led. Built for any device.
           </p>
           <div className={styles.socials}>
             <a href={CONTACT.instagram} aria-label="Instagram" target="_blank" rel="noreferrer">
@@ -61,7 +61,7 @@ export function Footer() {
 
       <div className={`container ${styles.bottom}`}>
         <span className="mono">© {year} TECHLIFTED</span>
-        <span className="mono">MADE IN INDIA · FOR INDIA</span>
+        <span className="mono">LEARN FROM ANYWHERE</span>
       </div>
     </footer>
   );

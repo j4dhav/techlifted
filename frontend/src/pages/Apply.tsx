@@ -4,9 +4,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, CheckIcon, WhatsAppIcon } from '../components/Icons';
 import { PROGRAM_OPTIONS, type ProgramSlug } from '../data/programs';
 import {
-  INDIAN_STATES,
+  COUNTRIES,
+  STATES_BY_COUNTRY,
   DEVICE_OPTIONS,
-  COUNTRY_CODES,
   AI_TOOLS_START_WEEKS,
   CONTACT,
 } from '../data/constants';
@@ -21,6 +21,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 interface FormState {
   fullName: string;
   email: string;
+  country: string;
   countryCode: string;
   phone: string;
   state: string;
@@ -37,7 +38,8 @@ type Errors = Partial<Record<keyof FormState, string>>;
 const initialState = (program: ProgramSlug | ''): FormState => ({
   fullName: '',
   email: '',
-  countryCode: '+91',
+  country: '',
+  countryCode: '',
   phone: '',
   state: '',
   school: '',
@@ -82,14 +84,26 @@ export function Apply() {
     setErrors((e) => ({ ...e, devices: undefined }));
   };
 
+  // Selecting a country also sets the phone dial code and clears the state.
+  const selectCountry = (name: string) => {
+    const dial = COUNTRIES.find((c) => c.name === name)?.dial || '';
+    setForm((f) => ({ ...f, country: name, countryCode: dial, state: '' }));
+    setErrors((e) => ({ ...e, country: undefined, state: undefined }));
+  };
+
+  // Countries with a built-in state/province list get a dropdown.
+  const stateList = STATES_BY_COUNTRY[form.country];
+
   function validateStep(s: number): boolean {
     const e: Errors = {};
     if (s === 0) {
       if (form.fullName.trim().length < 2) e.fullName = 'Please enter your full name.';
       if (!EMAIL_RE.test(form.email.trim())) e.email = 'Enter a valid email address.';
+      if (!form.country) e.country = 'Please select your country.';
       const digits = form.phone.replace(/\D/g, '');
       if (digits.length < 6) e.phone = 'Enter a valid phone number.';
-      if (!form.state) e.state = 'Please select your state.';
+      // State is required only for countries that have a state dropdown.
+      if (stateList && !form.state) e.state = 'Please select your state.';
     }
     if (s === 1) {
       if (!form.program) e.program = 'Please choose a program.';
@@ -120,9 +134,10 @@ export function Apply() {
     const fd = new FormData();
     fd.append('fullName', form.fullName.trim());
     fd.append('email', form.email.trim());
+    fd.append('country', form.country);
     fd.append('countryCode', form.countryCode);
     fd.append('phone', form.phone.trim());
-    fd.append('state', form.state);
+    fd.append('state', form.state.trim());
     fd.append('school', form.school.trim());
     fd.append('program', form.program);
     if (isAiTools && form.preferredStartWeek)
@@ -234,41 +249,60 @@ export function Apply() {
                       autoComplete="email"
                     />
                   </Field>
+                  <Field label="Country" required error={errors.country}>
+                    <select
+                      className={styles.input}
+                      value={form.country}
+                      onChange={(e) => selectCountry(e.target.value)}
+                      autoComplete="country-name"
+                    >
+                      <option value="">Select your country…</option>
+                      {COUNTRIES.map((c) => (
+                        <option key={c.name} value={c.name}>{c.name}</option>
+                      ))}
+                    </select>
+                  </Field>
                   <Field label="Phone Number" required error={errors.phone} hint="Used for WhatsApp class updates">
                     <div className={styles.phoneRow}>
-                      <select
-                        className={styles.code}
-                        value={form.countryCode}
-                        onChange={(e) => update('countryCode', e.target.value)}
-                        aria-label="Country code"
-                      >
-                        {COUNTRY_CODES.map((c) => (
-                          <option key={c.code} value={c.code}>{c.label}</option>
-                        ))}
-                      </select>
+                      <span className={styles.code} aria-hidden>
+                        {form.countryCode || '+—'}
+                      </span>
                       <input
                         className={styles.input}
                         type="tel"
                         value={form.phone}
                         onChange={(e) => update('phone', e.target.value)}
-                        placeholder="98765 43210"
+                        placeholder={form.country ? 'Your number' : 'Select country first'}
                         autoComplete="tel-national"
+                        disabled={!form.country}
                       />
                     </div>
                   </Field>
                   <div className={styles.grid2}>
-                    <Field label="State" required error={errors.state}>
-                      <select
-                        className={styles.input}
-                        value={form.state}
-                        onChange={(e) => update('state', e.target.value)}
-                      >
-                        <option value="">Select your state…</option>
-                        {INDIAN_STATES.map((s) => (
-                          <option key={s} value={s}>{s}</option>
-                        ))}
-                      </select>
-                    </Field>
+                    {stateList ? (
+                      <Field label="State / Province" required error={errors.state}>
+                        <select
+                          className={styles.input}
+                          value={form.state}
+                          onChange={(e) => update('state', e.target.value)}
+                        >
+                          <option value="">Select…</option>
+                          {stateList.map((s) => (
+                            <option key={s} value={s}>{s}</option>
+                          ))}
+                        </select>
+                      </Field>
+                    ) : (
+                      <Field label="State / Region" hint="Optional" error={errors.state}>
+                        <input
+                          className={styles.input}
+                          value={form.state}
+                          onChange={(e) => update('state', e.target.value)}
+                          placeholder="State, province, or region"
+                          disabled={!form.country}
+                        />
+                      </Field>
+                    )}
                     <Field label="School / College" hint="Optional">
                       <input
                         className={styles.input}
@@ -364,7 +398,8 @@ export function Apply() {
                     <Row label="Full Name" value={form.fullName} />
                     <Row label="Email" value={form.email} />
                     <Row label="Phone" value={`${form.countryCode} ${form.phone}`} />
-                    <Row label="State" value={form.state} />
+                    <Row label="Country" value={form.country || '—'} />
+                    <Row label="State / Region" value={form.state || '—'} />
                     <Row label="School / College" value={form.school || '—'} />
                     <Row label="Program" value={programLabel || '—'} />
                     {isAiTools && (

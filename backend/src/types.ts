@@ -12,6 +12,7 @@ export interface ApplicationInput {
   fullName: string;
   email: string;
   phone: string; // E.164, e.g. +919876543210
+  country: string;
   state: string;
   school: string | null;
   program: ProgramSlug;
@@ -30,6 +31,7 @@ export interface ApplicationRow {
   full_name: string;
   email: string;
   phone: string;
+  country: string;
   state: string;
   school: string | null;
   program: string;

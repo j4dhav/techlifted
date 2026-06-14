@@ -4,21 +4,20 @@ import { ArrowRight } from '../components/Icons';
 import styles from './About.module.css';
 
 const TEAM = [
-  { name: 'Founder', role: 'Vision & Programs', initials: 'EB' },
-  { name: 'Lead Mentor', role: 'Engineering & Hardware', initials: 'EM' },
-  { name: 'Lead Mentor', role: 'Software & Python', initials: 'SW' },
-  { name: 'Lead Mentor', role: 'AI Tools & Automation', initials: 'AI' },
+  { name: 'Atharv Jadhav', role: 'Founder & Lead Mentor' },
+  { name: 'Anil Jadhav', role: 'Board of Directors' },
+  { name: 'Anushka Jadhav', role: 'Board of Directors' },
 ];
 
 const TIMELINE = [
   { when: '2026 · Q1', title: 'The idea', body: 'TechLiftED starts with a simple question: why should hands-on tech learning need expensive hardware or software?' },
   { when: '2026 · Q2', title: 'Curriculum built', body: 'Three browser-first programs designed around free tools and weekly, project-driven outcomes.' },
-  { when: '2026 · Jul', title: 'First cohorts', body: 'Engineering, Coding, and the rolling AI-Tools track open to students across India.' },
-  { when: 'Beyond', title: 'Scaling access', body: 'More tracks, regional language support, and partnerships with schools and colleges.' },
+  { when: '2026 · Jul', title: 'First cohorts', body: 'Engineering, Coding, and the rolling AI-Tools track open to students worldwide.' },
+  { when: 'Beyond', title: 'Scaling access', body: 'More tracks, more languages, and partnerships with schools and colleges across the globe.' },
 ];
 
 const VALUES = [
-  { title: 'Access over polish', body: 'If it doesn’t run on a budget Android phone over mobile data, we rethink it.' },
+  { title: 'Access over polish', body: 'If it doesn’t run on a budget phone over a slow connection, we rethink it.' },
   { title: 'Build, don’t memorise', body: 'Every week ends in something you made. Theory serves the project, never the reverse.' },
   { title: 'Free by default', body: 'We design around free tiers so cost is never the reason someone can’t start.' },
 ];
@@ -38,9 +37,26 @@ export function About() {
             </h1>
             <p className={styles.lead}>
               TechLiftED exists to make practical, project-based tech education
-              reachable for every student in India — regardless of their device,
-              budget, or background. We teach with free, browser-based tools and
-              live mentors, so the only thing you need to begin is curiosity.
+              reachable for every student — anywhere in the world, regardless of
+              their device, budget, or background. We teach with free,
+              browser-based tools and live mentors, so the only thing you need to
+              begin is curiosity.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Mission */}
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <Reveal className={styles.mission}>
+            <span className="eyebrow">Our Mission</span>
+            <p className={styles.missionText}>
+              To make hands-on technology education genuinely accessible to
+              anyone, anywhere, on any device — so that a learner’s potential is
+              never limited by the cost of hardware, software, or where they
+              happen to live. We turn curiosity into capability for students
+              around the world.
             </p>
           </Reveal>
         </div>
@@ -65,12 +81,11 @@ export function About() {
           <Reveal className="section-head">
             <span className="eyebrow">Team</span>
             <h2>The people behind TechLiftED</h2>
-            <p>A small team of working engineers and educators who love teaching beginners.</p>
+            <p>A small team building practical tech education for everyone.</p>
           </Reveal>
           <RevealGroup className={styles.team}>
-            {TEAM.map((m, i) => (
-              <Reveal as="div" key={i} className={styles.member}>
-                <div className={styles.avatar} aria-hidden>{m.initials}</div>
+            {TEAM.map((m) => (
+              <Reveal as="div" key={m.name} className={styles.member}>
                 <h3 className={styles.memberName}>{m.name}</h3>
                 <span className={styles.memberRole}>{m.role}</span>
               </Reveal>

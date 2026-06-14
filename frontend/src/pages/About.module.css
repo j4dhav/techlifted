@@ -21,6 +21,25 @@
   line-height: 1.7;
 }
 
+.mission {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(28px, 5vw, 48px);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, var(--surface-2), var(--surface));
+}
+.mission .eyebrow { display: block; margin-bottom: 16px; }
+.missionText {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 2.6vw, 1.9rem);
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  max-width: 60ch;
+}
+
 .values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .valueCard {
   padding: 28px;

@@ -61,6 +61,7 @@ export interface AdminApplication {
   fullName: string;
   email: string;
   phone: string;
+  country: string;
   state: string;
   school: string | null;
   program: string;
