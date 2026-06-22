@@ -32,9 +32,10 @@ export function Navbar() {
           <span className={styles.logoMark} aria-hidden>
             <svg width="26" height="26" viewBox="0 0 32 32">
               <defs>
-                <linearGradient id="navg" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stopColor="#2DD4BF" />
-                  <stop offset="1" stopColor="#38BDF8" />
+                <linearGradient id="navg" x1="0" y1="0" x2="0.5" y2="1">
+                  <stop offset="0" stopColor="#4AA6D6" />
+                  <stop offset="0.55" stopColor="#45CFC9" />
+                  <stop offset="1" stopColor="#5FE3D6" />
                 </linearGradient>
               </defs>
               <path d="M7 9 L16 3 L25 9 L25 14 L16 8 L7 14 Z" fill="url(#navg)" />

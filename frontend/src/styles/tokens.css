@@ -1,26 +1,27 @@
 :root {
-  /* ── Color palette (cool-toned dark) ─────────────────────────────────── */
-  --bg: #080b12;
-  --surface: #0f1622;
-  --surface-2: #161f2e;
-  --border: #1e2a3c;
-  --text: #e8eef6;
-  --text-muted: #8595ad;
-  --accent: #2dd4bf;
-  --accent-2: #38bdf8;
-  --glow: rgba(45, 212, 191, 0.18);
+  /* ── Color palette — tuned to the TechLiftED logo (ocean blue → aqua cyan
+        on deep navy) ─────────────────────────────────────────────────────── */
+  --bg: #0b1322;          /* deep navy (matches logo background) */
+  --surface: #121d30;     /* elevated cards, nav */
+  --surface-2: #1b2942;   /* hover / nested surfaces */
+  --border: #293a56;      /* hairline borders, 1px */
+  --text: #e9eff7;        /* primary text, cool white */
+  --text-muted: #8c9cb6;  /* secondary text */
+  --accent: #46d7cc;      /* primary accent — aqua/cyan (logo bottom) */
+  --accent-2: #49a4d6;    /* secondary accent — ocean blue (logo top) */
+  --glow: rgba(70, 215, 204, 0.18); /* cyan glow for shadows/halos */
 
   /* Derived tints */
-  --accent-soft: rgba(45, 212, 191, 0.12);
-  --accent-line: rgba(45, 212, 191, 0.35);
+  --accent-soft: rgba(70, 215, 204, 0.12);
+  --accent-line: rgba(70, 215, 204, 0.34);
   --danger: #f87171;
   --success: #34d399;
   --whatsapp: #1faf54;
   --whatsapp-dark: #0e7a38;
 
-  /* Gradient — cyan → blue ONLY */
+  /* Gradient — ocean blue → aqua cyan (matches the logo chevrons) */
   --grad: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
-  --grad-text: linear-gradient(120deg, #e8eef6 0%, #9fe9df 55%, #7cc6f5 100%);
+  --grad-text: linear-gradient(120deg, #e9eff7 0%, #a6ece3 55%, #8fcaea 100%);
 
   /* ── Typography ──────────────────────────────────────────────────────── */
   --font-display: 'Sora', system-ui, sans-serif;
