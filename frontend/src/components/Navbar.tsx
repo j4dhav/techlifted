@@ -29,20 +29,13 @@ export function Navbar() {
     <header className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
       <div className={`container ${styles.inner}`}>
         <Link to="/" className={styles.logo} aria-label="TechLiftED home">
-          <span className={styles.logoMark} aria-hidden>
-            <svg width="26" height="26" viewBox="0 0 32 32">
-              <defs>
-                <linearGradient id="navg" x1="0" y1="0" x2="0.5" y2="1">
-                  <stop offset="0" stopColor="#4AA6D6" />
-                  <stop offset="0.55" stopColor="#45CFC9" />
-                  <stop offset="1" stopColor="#5FE3D6" />
-                </linearGradient>
-              </defs>
-              <path d="M7 9 L16 3 L25 9 L25 14 L16 8 L7 14 Z" fill="url(#navg)" />
-              <path d="M7 17 L16 11 L25 17 L25 22 L16 16 L7 22 Z" fill="url(#navg)" />
-              <path d="M7 25 L16 19 L25 25 L25 30 L16 24 L7 30 Z" fill="url(#navg)" />
-            </svg>
-          </span>
+          <img
+            className={styles.logoMark}
+            src="/favicon.svg"
+            alt="TechLiftED logo"
+            width={38}
+            height={38}
+          />
           <span className={styles.logoText}>
             TechLift<span className={styles.logoAccent}>ED</span>
           </span>
