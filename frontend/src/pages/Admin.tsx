@@ -12,12 +12,25 @@ import {
   type InviteResult,
 } from '../lib/api';
 import { PROGRAM_OPTIONS } from '../data/programs';
+import { CONTACT } from '../data/constants';
 import styles from './Admin.module.css';
 
 const TOKEN_KEY = 'techlifted_admin_token';
+const COMMUNITY =
+  import.meta.env.VITE_WHATSAPP_COMMUNITY || CONTACT.whatsappCommunity;
 
 function programLabel(slug: string): string {
   return PROGRAM_OPTIONS.find((p) => p.value === slug)?.label || slug;
+}
+
+/** Build a click-to-chat WhatsApp link with a pre-filled invite message. */
+function whatsappInviteLink(phone: string): string {
+  const digits = phone.replace(/\D/g, '');
+  const text = encodeURIComponent(
+    `Welcome to TechLiftED! Tap to join our student community for class ` +
+      `updates and support: ${COMMUNITY}`,
+  );
+  return `https://wa.me/${digits}?text=${text}`;
 }
 
 interface Toast {
@@ -236,6 +249,7 @@ export function Admin() {
                   <th>Program</th>
                   <th>Devices</th>
                   <th>Invited</th>
+                  <th>Invite</th>
                 </tr>
               </thead>
               <tbody>
@@ -274,6 +288,17 @@ export function Admin() {
                       ) : (
                         <span className={styles.invitedNo}>No</span>
                       )}
+                    </td>
+                    <td>
+                      <a
+                        className={styles.waLink}
+                        href={whatsappInviteLink(a.phone)}
+                        target="_blank"
+                        rel="noreferrer"
+                        title={`Send WhatsApp invite to ${a.fullName}`}
+                      >
+                        <WhatsAppIcon size={15} /> Invite
+                      </a>
                     </td>
                   </tr>
                 ))}

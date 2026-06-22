@@ -214,6 +214,26 @@
 }
 .invitedNo { color: var(--text-muted); font-size: 0.82rem; }
 
+.waLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 11px;
+  border-radius: var(--radius);
+  background: rgba(31, 175, 84, 0.12);
+  border: 1px solid rgba(31, 175, 84, 0.35);
+  color: #4ade80;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all var(--t-fast);
+}
+.waLink:hover {
+  background: var(--whatsapp);
+  border-color: var(--whatsapp);
+  color: #fff;
+}
+
 /* Contact messages */
 .messagesHead { margin: 40px 0 18px; }
 .messagesHead .eyebrow { display: block; margin-bottom: 8px; }
